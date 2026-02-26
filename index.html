@@ -3,45 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Timezone Clock</title>
+    <title>Timezone Clocks</title>
     <style>
         body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: #f4f4f4;
+            margin: 0;
+            height: 100vh;
         }
         .clock {
-            margin: 10px;
+            margin: 20px;
             padding: 20px;
+            background: white;
             border-radius: 10px;
-            background-color: #ffffff;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 150px;
+        }
+        .digital {
             font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .analog {
+            /* Your analog clock styles here */
+            width: 100px;
+            height: 100px;
+            border: 5px solid #333;
+            border-radius: 50%;
+            position: relative;
+            margin: auto;
+            animation: spin 60s linear infinite;
+        }
+        .hand {
+            background: #333;
+            position: absolute;
+            transform-origin: bottom;
+            bottom: 50%;
         }
     </style>
 </head>
 <body>
-    <h1>Current Time in Multiple Timezones</h1>
-    <div id="clocks"></div>
-    <script>
-        const timezones = ["UTC", "America/New_York", "Europe/London", "Asia/Tokyo", "Australia/Sydney"];
-        const displayClocks = () => {
-            const clocksContainer = document.getElementById('clocks');
-            clocksContainer.innerHTML = '';
-            timezones.forEach(tz => {
-                const now = new Date().toLocaleString('en-US', { timeZone: tz });
-                const clockDiv = document.createElement('div');
-                clockDiv.classList.add('clock');
-                clockDiv.innerText = `${tz}: ${now}`;
-                clocksContainer.appendChild(clockDiv);
-            });
-        };
-        displayClocks();
-        setInterval(displayClocks, 1000);
-    </script>
+    <h1>World Clocks</h1>
+    <div class="clock" id="IST">
+        <div class="analog" style="transform: rotate(calc(((${new Date().getHours()} + 5.5) % 12) * 30))">
+            <div class="hand" style="height: 40px; width: 4px; transform: rotate(calc(((${new Date().getHours()} + 5.5) % 12) * 30));"></div>
+        </div>
+        <div class="digital">IST: ${new Date().getUTCDate()} - ${new Date().getHours() + 5.5} : ${new Date().getMinutes()}</div>
+    </div>
+    <div class="clock" id="EST">
+        <div class="analog" style="transform: rotate(calc(((${new Date().getHours()} - 5) % 12) * 30))">
+            <div class="hand" style="height: 40px; width: 4px; transform: rotate(calc(((${new Date().getHours()} - 5) % 12) * 30));"></div>
+        </div>
+        <div class="digital">EST: ${new Date().getUTCDate()} - ${new Date().getHours() - 5} : ${new Date().getMinutes()}</div>
+    </div>
+    <div class="clock" id="PST">
+        <div class="analog" style="transform: rotate(calc(((${new Date().getHours()} - 8) % 12) * 30))">
+            <div class="hand" style="height: 40px; width: 4px; transform: rotate(calc(((${new Date().getHours()} - 8) % 12) * 30));"></div>
+        </div>
+        <div class="digital">PST: ${new Date().getUTCDate()} - ${new Date().getHours() - 8} : ${new Date().getMinutes()}</div>
+    </div>
 </body>
 </html>
