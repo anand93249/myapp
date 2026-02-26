@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timezone Clock</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .clock {
+            margin: 10px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Current Time in Multiple Timezones</h1>
+    <div id="clocks"></div>
+    <script>
+        const timezones = ["UTC", "America/New_York", "Europe/London", "Asia/Tokyo", "Australia/Sydney"];
+        const displayClocks = () => {
+            const clocksContainer = document.getElementById('clocks');
+            clocksContainer.innerHTML = '';
+            timezones.forEach(tz => {
+                const now = new Date().toLocaleString('en-US', { timeZone: tz });
+                const clockDiv = document.createElement('div');
+                clockDiv.classList.add('clock');
+                clockDiv.innerText = `${tz}: ${now}`;
+                clocksContainer.appendChild(clockDiv);
+            });
+        };
+        displayClocks();
+        setInterval(displayClocks, 1000);
+    </script>
+</body>
+</html>
